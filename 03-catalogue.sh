@@ -20,6 +20,6 @@ systemctl daemon-reload
 systemctl enable catalogue
 systemctl restart catalogue
 
-dnf install mongo-mongosh -y
+dnf install mongod-mongosh -y
 
 mongosh --host mongo-dev.vdevops98.online </app/db/master-data.js
