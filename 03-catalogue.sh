@@ -5,7 +5,7 @@ dnf install nodejs -y
 cp mongo.rep /etc/yum.repos.d/mongo.repo
 
 useradd roboshop
-
+rm -rf /app
 mkdir /app
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
