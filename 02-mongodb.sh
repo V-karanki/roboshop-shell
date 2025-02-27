@@ -1,3 +1,6 @@
+component=mongo
+source common.sh
+
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-org -y
 

@@ -1,11 +1,11 @@
+component=shipping
+source common.sh
+
 dnf install maven -y
 cp shipping.service /etc/systemd/system/shipping.service
 useradd roboshop
-rm -rf /app
-mkdir /app
-curl -L -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
-cd /app
-unzip /tmp/shipping.zip
+
+artifact_download
 
 cd /app
 mvn clean package
@@ -19,6 +19,4 @@ mysql -h mysql-dev.vdevops98.online -uroot -pRoboShop@1 < /app/db/schema.sql
 mysql -h mysql-dev.vdevops98.online -uroot -pRoboShop@1 < /app/db/app-user.sql
 mysql -h mysql-dev.vdevops98.online -uroot -pRoboShop@1 < /app/db/master-data.sql
 
-systemctl daemon-reload
-systemctl enable shipping
-systemctl restart shipping
+systemd_setup
