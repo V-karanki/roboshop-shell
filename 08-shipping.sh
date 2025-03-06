@@ -1,22 +1,17 @@
 component=shipping
 source common.sh
 
-dnf install maven -y
-cp shipping.service /etc/systemd/system/shipping.service
-useradd roboshop
 
-artifact_download
+maven_app_setup
 
-cd /app
-mvn clean package
-mv target/shipping-1.0.jar shipping.jar
+print_head Install MySQL Client
+dnf install mysql -y &>>$log_file
 
+print_head Load Schema
+mysql -h mysql-dev.rdevopsb83.online -uroot -pRoboShop@1 < /app/db/schema.sql &>>$log_file
 
+print_head Load User creation
+mysql -h mysql-dev.rdevopsb83.online -uroot -pRoboShop@1 < /app/db/app-user.sql &>>$log_file
 
-dnf install mysql -y
-
-mysql -h mysql-dev.vdevops98.online -uroot -pRoboShop@1 < /app/db/schema.sql
-mysql -h mysql-dev.vdevops98.online -uroot -pRoboShop@1 < /app/db/app-user.sql
-mysql -h mysql-dev.vdevops98.online -uroot -pRoboShop@1 < /app/db/master-data.sql
-
-systemd_setup
+print_head Load Master Data
+mysql -h mysql-dev.rdevopsb83.online -uroot -pRoboShop@1 < /app/db/master-data.sql &>>$log_file
